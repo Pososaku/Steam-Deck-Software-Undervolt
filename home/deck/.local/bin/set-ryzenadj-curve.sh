@@ -8,6 +8,8 @@ experimental=$(</home/deck/.local/bin/experimentaladj.txt)
 # https://github.com/NGnius/PowerTools/issues/84#issuecomment-1482736698
 # https://www.amd.com/system/files/documents/faq-curve-optimizer.pdf
 # Expect your UV to be 3-5x your set curve value. IE: -5 = -15mv to -25mv
+# Имейте в виду, что в этом файле вы заедете значения кривой, а не mV напрямую.
+# Помините, что значения кривой которые вы выставляете будут в 3-5 больше при переводе в mV. Пример: -5 = от -15 мВ до -25 мВ (значения приблизительные!)
 
 if [[ $allow = "1" ]]
 then
@@ -18,15 +20,19 @@ then
         # EXPERIMENTAL SECTION
         # Put experimental settings here - these
         # will never be restored at next startup
+        
+        #       !ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ!
+        
+        #Секция ЭКСПЕРИМЕНТАЛЬНОГО андервольта. Данная секция отлично подходит для ПОДБОРА безопасных значений.
+        #Значения из этой секции будут деактивированы после перезагрузки.
+        
+        #Лимит -100
 
-        # CPU
-        # 0x100000 - 15 (Range: -30, 30)
+        #Устанавливайте значения кривой здесь:
         /home/deck/.local/bin/curve.sh -y --core0 -15 --core1 -15 --core2 -15 --core3 -15
 
-        # GPU (Currently not working!)
-        # 0x100000 - 15 (Range: -30, 30)
-        # /home/deck/.local/bin/ryzenadj --set-cogfx=0xFFFF0
 
+        
         echo "Experimental on" > /home/deck/.local/bin/statusadj.txt
     else
         # Fail safe to avoid repeated crashes at startup
@@ -41,18 +47,22 @@ then
             # WARNING: when service is enabled these will be restored
             # at next startup and can make your device unaccessible until you
             # repair/reimage your deck!
+            
+            #       !ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ!
+            
+            #СЕКЦИЯ ПОСТОЯННОГО АНДЕРВОЛЬТА. 
+            #Подходит ТОЛЬКО ДЛЯ ПРОВЕРЕННЫХ ЗНАЧЕНИЙ! Иначе может потребоваться переустановка Steam OS.
+            #Значения используемые в этой секции ОСТАЮТСЯ после перезагрузки.
+            #Непроверенные или небезопасные значения могут помешать вам загрузиться в ОС.
+            
+            #Лимит -100
 
-            # CPU
-            # 0x100000 - 5 (Range: -30, 30)
+            #Устанавливайте значения кривой здесь:
             /home/deck/.local/bin/curve.sh -y --core0 -5 --core1 -5 --core2 -5 --core3 -5
 
-            # GPU (Currently not working!)
-            # 0x100000 - 5 (Range: -30, 30)
-            # /home/deck/.local/bin/ryzenadj --set-cogfx=0xFFFFB
 
-            # Wait 10 seconds before declaring the undervolt a success
+            
             sleep 10
-
             # Only update status if still applying...
             status=$(</home/deck/.local/bin/statusadj.txt)
             if [[ $status = "Applying undervolt" ]]
@@ -62,18 +72,11 @@ then
         fi
     fi
 else
-    # UNDERVOLT-OFF SECTION
-    # Put default values here so the off.sh script can disable your tweaks.
-    # If you have experimental settings you forget to restore here a restart
-    # of your deck will also put the values back to default
 
-    # CPU
-    # 0x100000 - 0
+    #НЕ ИЗМЕНЯТЬ ЗНАЧЕНИЯ!
+    #Пожалуйста не трогайте эту секцию!
+    
     /home/deck/.local/bin/curve.sh -y --core0 0 --core1 0 --core2 0 --core3 0
-
-    # GPU (Currently not working!)
-    # 0x100000 - 0
-    # /home/deck/.local/bin/ryzenadj --set-cogfx=0x100000
-
+    
     echo "Undervolt off" > /home/deck/.local/bin/statusadj.txt
 fi
