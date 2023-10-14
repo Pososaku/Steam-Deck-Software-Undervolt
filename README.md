@@ -1,3 +1,48 @@
+## RU SECTION
+
+Данный репозиторий предоставляет легкую возможность эффективно андерольтить Steam Deck. Андервольт возможен как на все ядра сразу так и на каждое отдельно
+
+Форк [RyzenAdj](https://github.com/FlyGoat/RyzenAdj) и [KyleGospo](https://github.com/KyleGospo/Steam-Deck-Software-Undervolt).
+
+> [!WARNING]
+> Несмотря на то, что данное ПО сильно снижает риски связанные с окирпичиванием Steam Deck, оно все еще может нарушить работу вашей ОС и самого устройства. Никто Вам не даст гарантий что оно не повредит ваш Steam Deck. У вас должно быть полное понимание того что Вы >изменяете и зачем.
+>Используйте на свой риск и соблюдайте осторожность.
+>Предназначено для опытных пользователей!
+
+## Установка:
+1. Скачать [архив](https://github.com/Pososaku/Steam-Deck-Software-Undervolt/archive/refs/heads/main.zip) и распаковать.
+2. Перейти в папку ``Steam-Deck-Software-Undervolt-main`` и находясь внутри папки кликнуть правой кнопкой мыши на пустое пространство. В появившемся меню выбрать "Open Terminal Here".
+3. Ввести в терминале: `sudo ./install.sh`
+
+Запустится скрипт установки в котором вам нужно будет выбрать метод андервольта. Их всего два:
+
+* coall - метод, при котором значения кривой применяется сразу ко всем ядрам.
+* coper - метод, при котором значения кривой можно подобрать к каждому ядру отдельно.
+
+Для удаления - по аналогии выше, но вместо `install.sh`, запустить `uninstall.sh`
+
+## Использование:
+Для изменения параметров андервольта необходимо перейти в папку `/home/deck/.local/bin` (папка .local по умолчанию скрыта)
+
+Для изменения значений андервольта необходимо открыть файл:
+
+* Если вы используете метод для всех ядер(coall) то `set-ryzenadj-tweaks.sh`
+
+* Если вы используете метод для каждого ядра(coper) то `set-ryzenadj-curve.sh`
+
+Далее уже ориентироваться в нем опираясь на комментарии в самом файле.
+
+
+* Для запуска андервольта с экспериментальными параметрами - запустить  `/home/deck/.local/bin/experimental.sh`
+
+* Для запуска андервольта с постоянными параметрами - запустить `/home/deck/.local/bin/on.sh`
+
+* Для сброса значений андервольта - запустить `/home/deck/.local/bin/off.sh`
+
+Узнать статус андервольта можно в файле `/home/deck/.local/bin/statusadj.txt`
+
+## EN SECTION
+
 # Steam Deck Software Undervolt
 This repository offers an easy way to undervolt a Steam Deck as safely as possible and without entering the BIOS or disabling read-only using [RyzenAdj](https://github.com/FlyGoat/RyzenAdj) and systemd targets based on [Chris Down's guide](https://chrisdown.name/2017/10/29/adding-power-related-targets-to-systemd.html). 
 
